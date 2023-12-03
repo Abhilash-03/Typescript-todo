@@ -3,7 +3,6 @@ import { Request, Response } from "express";
 import { todoServices } from "../services/todo.services";
 import { StatusCodes } from "http-status-codes" 
 
-
 class todoController {
   // add todo controller
   addTodo = async (req: Request, res: Response) => {
@@ -11,7 +10,7 @@ class todoController {
     const { title, body } = req.body;
 
     if(!title || !body) {
-      throw new BadRequest("Title and Body must be provided.", 400);
+      throw new BadRequest("Title and Body must be provided.");
     }
 
     const todo = await todoServices.createTodo(req.body);
@@ -23,7 +22,12 @@ class todoController {
   getTodos = async (req: Request, res: Response) => {
  
     const todos = await todoServices.getTodos();
-    res.status(StatusCodes.OK).json({ todos, msg:"All Todos has been fetched!"});
+          
+    if(todos?.length === 0) {
+      throw new BadRequest("Todo list is empty!");
+   }
+
+    res.status(StatusCodes.OK).json({ todos, msg: "All Todos has been fetched!"});
 
   };
 
@@ -31,13 +35,23 @@ class todoController {
   getSingleTodo = async (req: Request, res: Response) => {
     const { id } = req.params;
     const todo = await todoServices.getATodo(id);
-    res.status(StatusCodes.OK).json({ todo, msg: "Todo has been fetched"});
+        
+    if(!todo) {
+      throw new BadRequest("Requested todo not found!");
+   }
+   
+    res.status(StatusCodes.OK).json({ todo, msg: "Success" });
   }
 
   // update todo
   updateTodo = async (req: Request, res: Response) => {
     const { id } = req.params;
     const todo = await todoServices.updateTodo(id, req.body);
+    
+    if(!todo){
+      throw new BadRequest("Requested todo not found!");
+  }
+
     res.status(StatusCodes.OK).json({ todo, msg: "Todo has been updated"});
   }
 
@@ -45,6 +59,10 @@ class todoController {
   deleteTodo = async (req: Request, res: Response) => {
     const { id } = req.params;
     const todo = await todoServices.deleteTodo(id);
+    if(!todo){
+      throw new BadRequest("Requested todo not found!");
+  }
+    
     res.status(StatusCodes.OK).json({ todo, msg: "Todo has been deleted"});
   }
 

@@ -4,19 +4,21 @@ import { Todo } from "../models/todo.models";
 export class todoService {
     // create a todo
     createTodo = async (data: any) => {
-        try{
-            const newTodo = await Todo.create(data);
-            return newTodo;
-        } catch(error) {
-            console.log(error);
-        }
+       try {
+        const newTodo = await Todo.create(data);
+        return newTodo;
+
+       } catch (error: any) {
+         console.log(error);
+       }
+      
     }
 
 //    get all todos 
      getTodos = async () => {
         try {
             const todos = await Todo.find({});
-            return todos
+            return todos;
         } catch (error) {
             console.log(error);
         }
@@ -26,9 +28,6 @@ export class todoService {
     getATodo = async (id: string) => {
         try {
             const todo = await Todo.findById({_id: id});
-            if(!todo) {
-                throw new BadRequest("Todo is not available", 400);
-            }
             return todo;
 
         } catch (error) {
@@ -42,9 +41,6 @@ export class todoService {
         try {
             const updatedTodo = await Todo.findByIdAndUpdate({_id: id}, data, {new: true});
 
-            if(!updatedTodo){
-                throw new BadRequest("Todo is not available", 400);
-            }
             return updatedTodo;
 
         } catch (error) {
@@ -57,10 +53,7 @@ export class todoService {
      deleteTodo = async (id: string) => {
          try {
             const deletedTodo = await Todo.findByIdAndDelete({_id: id});
-
-            if(!deletedTodo){
-                throw new BadRequest("Todo is not available", 400);
-            }
+            return deletedTodo;
 
          } catch (error) {
             console.log(error);
