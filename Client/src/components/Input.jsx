@@ -12,7 +12,6 @@ const Input = ({label, type, className= '', placeholder, value, ...props }) => {
        placeholder={placeholder}
        value={value}
        {...props}
-       required
       />
 
       </div>

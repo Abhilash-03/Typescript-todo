@@ -14,6 +14,7 @@ const InputField = ({
         placeholder="Enter Todo Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        required
        />
 
        <Input
@@ -23,6 +24,7 @@ const InputField = ({
         placeholder="Write Todo Body"
         value={body}
         onChange={(e) => setBody(e.target.value)}
+        required
        />
 
        <button type="submit" className="btn">Add</button>
