@@ -1,8 +1,14 @@
 import { Link } from "react-router-dom"
 
-const Details = ({ getTodo, handleDelete }) => {
+const Details = ({ getTodo, handleDelete, isLoading, msg, errorMsg }) => {
   return (
     <section className="dtls">
+      {
+        !isLoading && msg && <p className={msg ? "successMsg" : "message"}>Success - {msg}</p>
+      }
+       {
+        errorMsg && !isLoading && <p className={errorMsg ? "errMsg" : 'message'}>Message: {errorMsg}</p>
+       }
        {
         getTodo.map((todo) => (
             <div key={todo._id} className="todoInfo">

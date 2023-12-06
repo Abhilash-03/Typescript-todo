@@ -1,11 +1,17 @@
 import Input from "./Input"
 
 const EditTodo = ({
-    editTitle, editBody, editChecked, setEditTitle, setEditBody, setEditChecked, handleEditTodo, getTodo
+    editTitle, editBody, editChecked, setEditTitle, setEditBody, setEditChecked, handleEditTodo, getTodo, isLoading, msg, errorMsg
 }) => {
   return (
     <section className="edit-todo">
       <h2 className="heading">Edit Todo ✏️</h2>
+      {
+        !isLoading && msg && <p className={msg ? "successMsg" : "message"}>Success - {msg}</p>
+      }
+       {
+        errorMsg && !isLoading && <p className={errorMsg ? "errMsg" : 'message'}>Fail: {errorMsg}</p>
+       }
       {
         getTodo.map((todo) => (
             <div key={todo._id}>

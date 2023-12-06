@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Martian+Mono&family=Merriweather&family=Roboto&display=swap');
 *{
   margin: 0;
   padding: 0;
@@ -6,6 +7,7 @@
 
 body{
   background-color: rgb(223, 223, 223);
+  font-family: 'Merriweather', serif;
 }
 
 .app{
@@ -56,6 +58,7 @@ input[type="text"]{
   outline: none;
   border-radius: 0;
   border-radius: 6px;
+  font-family: 'Martian Mono', monospace;
 }
 
 input[type="text"]:is(:hover, :focus){
@@ -78,6 +81,7 @@ input[type="text"]:is(:hover, :focus){
   color: white;
   cursor: pointer;
   border-radius: 6px;
+  font-family: 'Martian Mono', monospace;
 }
 
 .btn:is(:hover, :focus){
@@ -139,6 +143,7 @@ ul li{
   min-height: 60px;
   margin: 10px 0;
   font-weight: bold;
+  font-family: 'Martian Mono', monospace;
 }
 
 ul li .item{
@@ -186,6 +191,9 @@ ul li:is(:hover, :focus){
     width: 100%;
     place-content: center;
     display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
     box-shadow: 2px 3px 8px black;
 }
 
@@ -223,6 +231,7 @@ input[type="checkbox"]{
   min-height: 40px;
   accent-color: teal;
   cursor: pointer;
+  font-family: 'Martian Mono', monospace;
 } 
 
 input[type="checkbox"]:is(:hover, :focus){
@@ -252,4 +261,46 @@ input[type="checkbox"]:is(:hover, :focus){
 
 .checked{
   text-decoration: line-through 2px teal;
+}
+
+.list-msg{
+  display: flex;
+  place-content: center;
+  align-items: center;
+  margin: 4rem auto;
+  border: none;
+  background-color: #f1f0f0;
+  padding: 10px;
+  border-radius: 6px;
+  width: 60%;
+}
+
+.message{
+  display: none;
+}
+.successMsg, .errorMsg {
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  font-size: 21px;
+  margin: 10px;
+  font-family: 'Martian Mono', monospace;
+}
+
+.successMsg{
+  color: teal;
+}
+
+.errorMsg{
+  color: red;
+}
+
+.loader{
+  width: 60%;
+  display: flex;
+  place-content: center;
+  margin: 3rem auto;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 6px;
 }

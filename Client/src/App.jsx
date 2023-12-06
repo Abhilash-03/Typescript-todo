@@ -14,35 +14,58 @@ function App() {
     const [editTitle, setEditTitle] = useState('');
     const [editBody, setEditBody] = useState('');
     const [editChecked, setEditChecked] = useState(false);
+    const [msg, setMsg] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
 
     const getTodos = async () => {
+      setIsLoading(true);
         try {
           const response = await axios.get('/');
           const data = response.data.todos;
           setGetAllTodos([...data]);
-          // console.log(data);
+          setIsLoading(false);
+
         } catch (error) {
-          console.log(error.response.data);
+          // console.log(error.response.data);
+          setIsLoading(false);
+          setErrorMsg(error.response.data?.msg);
+          setGetAllTodos([]);
+          setTimeout(() => {
+            setErrorMsg('');
+          }, 2000);
+
         }
      }
  
      useEffect(() => {
         getTodos();  
 
-     }, [getAllTodos]);
+     }, []);
  
   
     const handleSubmit = async(e) => {
       e.preventDefault();
       try{
         const response = await axios.post('/', {title, body});
-        console.log(response?.data);
+        // console.log(response?.data);
+        const dataMsg = response?.data?.msg;
         setTitle('');
         setBody('');
-      } catch(err) {
-        console.log(err?.response?.data?.msg);
+        setMsg(dataMsg);
+        setTimeout(() => {
+           setMsg('');
+        }, 2500)
+        getTodos();
+      } catch(error) {
+        // console.log(error.response.data?.msg);
+        const errMsg = error.response.data?.msg;
+        setErrorMsg(errMsg);
+        setTimeout(() => {
+          setErrorMsg('');
+       }, 2500)
       }
   
     }
@@ -50,19 +73,31 @@ function App() {
     const handleDelete = async (id) => {
         try {
             const response = await axios.delete(`/${id}`);
-            console.log(response.data.todo)
-            navigate('/');
+            // console.log(response.data.todo);
+            const data = response?.data?.msg;
+            setMsg(data);
+            getTodos();
+            setTimeout(() => {
+              setMsg("");
+              navigate('/');
+
+            }, 2500);
         } catch (error) {
-            console.log(error.response.data);
+            // console.log(error.response.data);
+            const data = error.response.data?.msg
+            setErrorMsg(data);
+            setTimeout(() => {
+              setErrorMsg("");
+              navigate('/');
+            }, 2500);
         }
     }
 
     const handleGetATodo = async (id) => {
         try {
           const response = await axios.get(`/${id}`);
-          console.log(response.data.todo);
+          // console.log(response.data.todo);
           const data = response.data.todo;
-
           setGetTodo([data]);
           setEditTitle(data.title);
           setEditBody(data.body);
@@ -80,13 +115,24 @@ function App() {
           completed: editChecked
         }
         const response = await axios.patch(`/${id}`, updateTodo);
-        console.log(response.data.todo);
+        const data = response?.data?.msg
+        // console.log(data);
+        setMsg(data)
         setEditTitle('');
         setEditBody('');
-        navigate('/');
-
+        setTimeout(() => {
+          setMsg('');
+          navigate('/');
+        }, 2500)
+        getTodos();
       } catch (error) {
-        console.log(error.response.data);
+        // console.log(error.response.data);
+        const data = error.response?.data?.msg
+        setErrorMsg(data);
+        setTimeout(() => {
+          setErrorMsg('');
+          navigate('/');
+        }, 2500)
       }
     }
 
@@ -103,9 +149,19 @@ function App() {
            handleSubmit={handleSubmit}
            getAllTodos={getAllTodos}
            handleGetATodo={handleGetATodo}
+           msg={msg}
+           isLoading={isLoading}
+           errorMsg={errorMsg}
           />} />
 
-          <Route exact path={`/tododetails/:id`} element={<Details  getTodo={getTodo} handleDelete={handleDelete} />} />
+          <Route exact path={`/tododetails/:id`} element={<Details 
+           isLoading={isLoading}
+           msg={msg}
+           errorMsg={errorMsg}
+           getTodo={getTodo} 
+           handleDelete={handleDelete} />}
+            />
+
           <Route exact path={`/editTodo/:id`} element={<EditTodo 
            editTitle={editTitle}
            editBody={editBody}
@@ -115,6 +171,9 @@ function App() {
            setEditChecked={setEditChecked}
            handleEditTodo={handleEditTodo}
            getTodo={getTodo}
+           isLoading={isLoading}
+           msg={msg}
+           errorMsg={errorMsg}
           />} />
         </Routes>
      </main>  

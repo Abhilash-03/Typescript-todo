@@ -1,7 +1,7 @@
 import Input from "./Input"
 
 const InputField = ({
-  title, setTitle, body, setBody, handleSubmit
+  title, setTitle, body, setBody, handleSubmit, msg, errorMsg, isLoading
 }) => {
 
 
@@ -26,8 +26,15 @@ const InputField = ({
         onChange={(e) => setBody(e.target.value)}
         required
        />
-
+       {
+        !errorMsg && !isLoading && msg && <p className={msg ? "successMsg" : "message"}>Success - {msg}</p>
+       }
+       {/* {
+        errorMsg && !isLoading && <p className={errorMsg ? "errorMsg" : 'message'}>Fail: {errorMsg}</p>
+       } */}
+      
        <button type="submit" className="btn">Add</button>
+       
     </form>
 
 
