@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "todo using typescript, node and mongodb",
   "main": "index.js",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "start": "node ./src/server/app.ts",
     "dev": "nodemon ./src/server/app.ts",
