@@ -5,6 +5,7 @@ import Details from './components/Details'
 import axios from '../src/axios/axios'
 import { useState, useEffect } from "react";
 import EditTodo from './components/EditTodo'
+import { TodoProvider } from './context'
 
 function App() {
     const [title, setTitle] = useState('');
@@ -139,44 +140,17 @@ function App() {
 
   return (
     <>
+    <TodoProvider value={{getTodos, handleDelete, handleEditTodo, handleGetATodo, handleSubmit, title, setTitle, body, setBody, editBody, setEditBody, editTitle, setEditTitle, editChecked, setEditChecked, msg, errorMsg, getAllTodos, isLoading, getTodo}} >
      <main className='app'>
         <Routes>
-          <Route index element={<Todo 
-           title={title}
-           body={body}
-           setTitle={setTitle}
-           setBody={setBody}
-           handleSubmit={handleSubmit}
-           getAllTodos={getAllTodos}
-           handleGetATodo={handleGetATodo}
-           msg={msg}
-           isLoading={isLoading}
-           errorMsg={errorMsg}
-          />} />
+          <Route index element={<Todo/>} />
 
-          <Route exact path={`/tododetails/:id`} element={<Details 
-           isLoading={isLoading}
-           msg={msg}
-           errorMsg={errorMsg}
-           getTodo={getTodo} 
-           handleDelete={handleDelete} />}
-            />
+          <Route exact path={`/tododetails/:id`} element={<Details/>} />
 
-          <Route exact path={`/editTodo/:id`} element={<EditTodo 
-           editTitle={editTitle}
-           editBody={editBody}
-           editChecked={editChecked}
-           setEditTitle={setEditTitle}
-           setEditBody={setEditBody}
-           setEditChecked={setEditChecked}
-           handleEditTodo={handleEditTodo}
-           getTodo={getTodo}
-           isLoading={isLoading}
-           msg={msg}
-           errorMsg={errorMsg}
-          />} />
+          <Route exact path={`/editTodo/:id`} element={<EditTodo />} />
         </Routes>
      </main>  
+     </TodoProvider>
     </>
   )
 }

@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom"
+import { useTodo } from "../context"
 
-const Details = ({ getTodo, handleDelete, isLoading, msg, errorMsg }) => {
+const Details = () => {
+  const { getTodo, handleDelete, isLoading, msg, errorMsg }  = useTodo();
+  
   return (
     <section className="dtls">
       {

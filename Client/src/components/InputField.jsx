@@ -1,9 +1,9 @@
+import { useTodo } from "../context"
 import Input from "./Input"
 
-const InputField = ({
-  title, setTitle, body, setBody, handleSubmit, msg, errorMsg, isLoading
-}) => {
+const InputField = () => {
 
+  const {title, setTitle, body, setBody, handleSubmit, msg, errorMsg, isLoading} = useTodo();
 
   return (
     <form className="formBox" onSubmit={handleSubmit}>

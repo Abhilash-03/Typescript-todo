@@ -1,8 +1,10 @@
+import { useTodo } from "../context"
 import Input from "./Input"
 
-const EditTodo = ({
+const EditTodo = () => {
+  const {
     editTitle, editBody, editChecked, setEditTitle, setEditBody, setEditChecked, handleEditTodo, getTodo, isLoading, msg, errorMsg
-}) => {
+} = useTodo();
   return (
     <section className="edit-todo">
       <h2 className="heading">Edit Todo ✏️</h2>

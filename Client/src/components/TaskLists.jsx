@@ -1,6 +1,9 @@
+import { useTodo } from "../context"
 import List from "./List"
 
-const TaskLists = ({ getAllTodos, handleGetATodo, isLoading}) => {
+const TaskLists = () => {
+  const {getAllTodos, isLoading} = useTodo();
+
   return (
     <ul>
       {
@@ -8,7 +11,7 @@ const TaskLists = ({ getAllTodos, handleGetATodo, isLoading}) => {
       }
       {
         isLoading ? <h1 className="loader">Loading...</h1> :
-        <List getAllTodos={getAllTodos} handleGetATodo={handleGetATodo} />
+        <List/>
       }
      
     </ul>

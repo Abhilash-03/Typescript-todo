@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
+import { useTodo } from '../context';
 
-const List = ({ getAllTodos,  handleGetATodo }) => {
+const List = () => {
+  const { getAllTodos,  handleGetATodo } = useTodo();
   return (
     <>
     { getAllTodos.map((todo) => (
