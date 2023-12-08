@@ -4,9 +4,9 @@ export const TodoContext = createContext({
 
     getTodos: () => {},
     handleSubmit: () => {},
-    handleDelete: (id) => {},
-    handleGetATodo: (id) => {},
-    handleEditTodo: (id) => {},
+    handleDelete: () => {},
+    handleGetATodo: () => {},
+    handleEditTodo: () => {},
 
 });
 

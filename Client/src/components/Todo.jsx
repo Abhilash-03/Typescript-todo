@@ -5,14 +5,20 @@ import TaskLists from "./TaskLists";
 
 const Todo = () => {
   
-  const {getAllTodos} = useTodo()
+  const {filtered, handleSelect} = useTodo()
+
 
   return (
     <>
       <h1 className="heading">📰 Todo App 🚀</h1>
       <InputField />
       <hr />
-      <h3>Task Lists - [{!getAllTodos.length ? 0 : getAllTodos.length}]</h3>
+      <h3>Task Lists - [{!filtered.length ? 0 : filtered.length}]</h3>
+      <div className="tabBtns">
+          <button className="tab" onClick={()=>handleSelect('all')}>All</button>
+          <button className="tab" onClick={()=>handleSelect('pending')}>Pending</button>
+          <button className="tab" onClick={()=>handleSelect('completed')}>Completed</button>
+      </div>
       <TaskLists/>
     </>
   );

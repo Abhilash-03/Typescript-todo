@@ -3,7 +3,7 @@ import Input from "./Input"
 
 const InputField = () => {
 
-  const {title, setTitle, body, setBody, handleSubmit, msg, errorMsg, isLoading} = useTodo();
+  const {title, setTitle, body, setBody, handleSubmit, msg, errorMsg, isLoading, inputRef} = useTodo();
 
   return (
     <form className="formBox" onSubmit={handleSubmit}>
@@ -14,6 +14,7 @@ const InputField = () => {
         placeholder="Enter Todo Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        ref={inputRef}
         required
        />
 

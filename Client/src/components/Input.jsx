@@ -1,5 +1,6 @@
+import { forwardRef } from "react"
 
-const Input = ({label, type, className= '', placeholder, value, ...props }) => {
+const Input = ({label, type, className= '', placeholder, value, ...props }, ref) => {
   return (
     <div className="inputArea">
         {
@@ -11,6 +12,7 @@ const Input = ({label, type, className= '', placeholder, value, ...props }) => {
        className={className}
        placeholder={placeholder}
        value={value}
+       ref={ref}
        {...props}
       />
 
@@ -18,4 +20,4 @@ const Input = ({label, type, className= '', placeholder, value, ...props }) => {
   )
 }
 
-export default Input
+export default forwardRef(Input)

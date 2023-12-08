@@ -135,7 +135,7 @@ ul::-webkit-scrollbar-thumb{
 ul li{
   width: 100%;
   list-style: none;
-  font-size: 21px;
+  font-size: 1.12rem;
   border: 1px solid teal;
   padding: 1rem;
   background-color: white;
@@ -202,7 +202,7 @@ ul li:is(:hover, :focus){
   font-size: 32px;
 }
 
-.dtls p{
+.dtls .info{
   margin: 12px;
   font-size: 23px;
   text-transform: capitalize;
@@ -261,6 +261,7 @@ input[type="checkbox"]:is(:hover, :focus){
 
 .checked{
   text-decoration: line-through 2px teal;
+  filter: blur(.8px);
 }
 
 .list-msg{
@@ -272,7 +273,8 @@ input[type="checkbox"]:is(:hover, :focus){
   background-color: #f1f0f0;
   padding: 10px;
   border-radius: 6px;
-  width: 60%;
+  min-width: 200px;
+  width: 75%;
 }
 
 .message{
@@ -282,7 +284,7 @@ input[type="checkbox"]:is(:hover, :focus){
   display: block;
   text-align: center;
   font-weight: bold;
-  font-size: 21px;
+  font-size: 1rem;
   margin: 10px;
   font-family: 'Martian Mono', monospace;
 }
@@ -303,4 +305,35 @@ input[type="checkbox"]:is(:hover, :focus){
   padding: 10px;
   background-color: #ffffff;
   border-radius: 6px;
+}
+
+.tabBtns{
+  width: 100%;
+  max-width: 650px;
+  margin: auto;
+  min-width: 200px;
+  display: flex;
+  place-content: center;
+  margin: 10px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.tabBtns .tab{
+    width: 50%;
+    padding: 10px;
+    font-size: 17px;
+    background: rgb(47, 47, 47);
+    border: none;
+    border-radius: 6px;
+    margin: 0 10px;
+    color: white;
+    font-family: 'Merriweather', serif;
+    cursor: pointer;
+
+}
+
+.tabBtns .tab:is(:hover, :focus, :active){
+  background-color: #008080;
+  scale: 1.02;
 }

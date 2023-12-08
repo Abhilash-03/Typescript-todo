@@ -3,7 +3,7 @@ import './App.css'
 import Todo from './components/Todo'
 import Details from './components/Details'
 import axios from '../src/axios/axios'
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import EditTodo from './components/EditTodo'
 import { TodoProvider } from './context'
 
@@ -18,8 +18,10 @@ function App() {
     const [msg, setMsg] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [filtered, setFiltered] = useState([]);
 
     const navigate = useNavigate();
+    const inputRef = useRef(null);
 
     const getTodos = async () => {
       setIsLoading(true);
@@ -28,7 +30,7 @@ function App() {
           const data = response.data.todos;
           setGetAllTodos([...data]);
           setIsLoading(false);
-
+          setFiltered([...data]);
         } catch (error) {
           // console.log(error.response.data);
           setIsLoading(false);
@@ -56,6 +58,7 @@ function App() {
         setTitle('');
         setBody('');
         setMsg(dataMsg);
+        inputRef.current.focus();
         setTimeout(() => {
            setMsg('');
         }, 2500)
@@ -137,10 +140,23 @@ function App() {
       }
     }
 
+    const handleSelect = (select) => {
+      let result;
+      if(select === 'all'){
+        result = getAllTodos;
+      } else if(select === 'pending') {
+         result = getAllTodos.filter(todo => todo.completed !== true);
+      } else if(select === 'completed') {
+         result =  getAllTodos.filter(todo => todo.completed === true);
+      }
+
+      setFiltered([...result]);
+    }
 
   return (
     <>
-    <TodoProvider value={{getTodos, handleDelete, handleEditTodo, handleGetATodo, handleSubmit, title, setTitle, body, setBody, editBody, setEditBody, editTitle, setEditTitle, editChecked, setEditChecked, msg, errorMsg, getAllTodos, isLoading, getTodo}} >
+    <TodoProvider value={{ getTodos, handleDelete, handleEditTodo, handleGetATodo, handleSubmit, title, setTitle, body, setBody, editBody, setEditBody, editTitle, setEditTitle, editChecked, setEditChecked, msg, errorMsg, getAllTodos, isLoading, getTodo, inputRef, handleSelect, filtered }} >
+
      <main className='app'>
         <Routes>
           <Route index element={<Todo/>} />
@@ -150,7 +166,8 @@ function App() {
           <Route exact path={`/editTodo/:id`} element={<EditTodo />} />
         </Routes>
      </main>  
-     </TodoProvider>
+
+    </TodoProvider>
     </>
   )
 }

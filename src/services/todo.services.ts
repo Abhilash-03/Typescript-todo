@@ -17,7 +17,7 @@ export class todoService {
 //    get all todos 
      getTodos = async () => {
         try {
-            const todos = await Todo.find({});
+            const todos = await Todo.find({}).sort('-createdAt');
             return todos;
         } catch (error) {
             console.log(error);
