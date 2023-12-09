@@ -36,6 +36,7 @@ function App() {
           setIsLoading(false);
           setErrorMsg(error.response.data?.msg);
           setGetAllTodos([]);
+          setFiltered([]);
           setTimeout(() => {
             setErrorMsg('');
           }, 2000);

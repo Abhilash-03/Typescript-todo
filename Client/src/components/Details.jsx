@@ -1,9 +1,14 @@
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { useTodo } from "../context"
+import { useEffect } from "react";
 
 const Details = () => {
-  const { getTodo, handleDelete, isLoading, msg, errorMsg }  = useTodo();
-  
+  const { getTodo, handleDelete, isLoading, msg, errorMsg, handleGetATodo }  = useTodo();
+  const{id} = useParams();
+  useEffect(() => {
+    handleGetATodo(id)
+  }, [])
+
   return (
     <section className="dtls">
       {
@@ -22,7 +27,7 @@ const Details = () => {
                 <p className="date info"><b>Created: </b> {(todo.createdAt).slice(0, 10)}</p>
                 <div className="btns">
                     <button className="btn deleteBtn" onClick={() => handleDelete(todo._id)}>🗑️</button>
-                  <Link to={`/editTodo/id=${todo._id}`}><button className="btn editBtn">📝</button> </Link>
+                  <Link to={`/editTodo/${todo._id}`}><button className="btn editBtn">📝</button> </Link>
                 </div>
             </div>
         ))

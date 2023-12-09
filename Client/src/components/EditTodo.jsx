@@ -1,10 +1,18 @@
+import { useParams } from "react-router-dom";
 import { useTodo } from "../context"
 import Input from "./Input"
+import { useEffect } from "react";
 
 const EditTodo = () => {
   const {
-    editTitle, editBody, editChecked, setEditTitle, setEditBody, setEditChecked, handleEditTodo, getTodo, isLoading, msg, errorMsg
+    editTitle, editBody, editChecked, setEditTitle, setEditBody, setEditChecked, handleEditTodo, getTodo, isLoading, msg, errorMsg, handleGetATodo
 } = useTodo();
+
+  const {id} = useParams();
+  useEffect(() => {
+    handleGetATodo(id);
+  }, [])
+
   return (
     <section className="edit-todo">
       <h2 className="heading">Edit Todo ✏️</h2>
