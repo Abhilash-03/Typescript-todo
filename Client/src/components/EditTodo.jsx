@@ -5,8 +5,9 @@ import { useEffect } from "react";
 
 const EditTodo = () => {
   const {
-    editTitle, editBody, editChecked, setEditTitle, setEditBody, setEditChecked, handleEditTodo, getTodo, isLoading, msg, errorMsg, handleGetATodo
+      getTodo, isLoading, msg, errorMsg, handleGetATodo, handleUpdate, editTodo, setEditTodo,
 } = useTodo();
+
 
   const {id} = useParams();
   useEffect(() => {
@@ -26,11 +27,11 @@ const EditTodo = () => {
         getTodo.map((todo) => (
             <div key={todo._id}>
        
-            <Input label="Title" type="text" placeholder="Edit your title" className="edit-title" value={editTitle} onChange={(e)=> setEditTitle(e.target.value)} required />
-            <Input label="Body" type="text" placeholder="Edit your body" className="edit-body" value={editBody} onChange={(e)=> setEditBody(e.target.value)} required />
-            <Input label="Completed" type="checkbox" className="edit-checkbox" checked={editChecked} onChange={()=> setEditChecked(!editChecked)} />
+            <Input label="Title" type="text" placeholder="Edit your title" className="edit-title" value={editTodo.title} onChange={(e)=> setEditTodo({...editTodo, title: e.target.value})} required />
+            <Input label="Body" type="text" placeholder="Edit your body" className="edit-body" value={editTodo.body} onChange={(e)=> setEditTodo({...editTodo, body: e.target.value})} required />
+            <Input label="Completed" type="checkbox" className="edit-checkbox" checked={editTodo.checked} onChange={(e)=> setEditTodo({ ...editTodo, checked: e.target.checked})} />
             <div className="savebtn">
-              <button type="submit" className="btn saveBtn" onClick={() => handleEditTodo(todo._id)}>Save</button>
+              <button type="submit" className="btn saveBtn" onClick={handleUpdate}>Save</button>
             </div>
          </div>
         ))

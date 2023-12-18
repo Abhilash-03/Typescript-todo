@@ -6,20 +6,21 @@ import axios from '../src/axios/axios'
 import { useState, useEffect, useRef } from "react";
 import EditTodo from './components/EditTodo'
 import { TodoProvider } from './context'
+import NotFound from './components/NotFound'
 
 function App() {
-    const [title, setTitle] = useState('');
-    const [body, setBody] = useState('');
     const [getAllTodos, setGetAllTodos] = useState([]);
     const [getTodo, setGetTodo] = useState([]);
-    const [editTitle, setEditTitle] = useState('');
-    const [editBody, setEditBody] = useState('');
-    const [editChecked, setEditChecked] = useState(false);
     const [msg, setMsg] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [filtered, setFiltered] = useState([]);
+    const [editTodo, setEditTodo] = useState({id: "", title: "", body: "", checked: false});
 
+    const updateTodo = (currentTodo) => {
+     setEditTodo({id: currentTodo._id, title: currentTodo.title, body: currentTodo.body, checked: currentTodo.completed})
+   }
+   
     const navigate = useNavigate();
     const inputRef = useRef(null);
 
@@ -46,26 +47,20 @@ function App() {
  
      useEffect(() => {
         getTodos();  
-
      }, []);
  
   
-    const handleSubmit = async(e) => {
-      e.preventDefault();
+    const handleSubmit = async(title, body, checked) => {
       try{
-        const response = await axios.post('/', {title, body});
-        // console.log(response?.data);
+        const response = await axios.post('/', {title, body, checked});
         const dataMsg = response?.data?.msg;
-        setTitle('');
-        setBody('');
         setMsg(dataMsg);
         inputRef.current.focus();
         setTimeout(() => {
            setMsg('');
         }, 2500)
-        getTodos();
+        // getTodos();
       } catch(error) {
-        // console.log(error.response.data?.msg);
         const errMsg = error.response.data?.msg;
         setErrorMsg(errMsg);
         setTimeout(() => {
@@ -104,15 +99,13 @@ function App() {
           // console.log(response.data.todo);
           const data = response.data.todo;
           setGetTodo([data]);
-          setEditTitle(data.title);
-          setEditBody(data.body);
-          setEditChecked(data.completed);
+
         } catch (error) {
           console.log(error.response.data);
         }
     }
 
-    const handleEditTodo = async (id) => {
+    const handleEditTodo = async (id, editTitle, editBody, editChecked) => {
       try {
         const updateTodo = {
           title: editTitle,
@@ -123,8 +116,6 @@ function App() {
         const data = response?.data?.msg
         // console.log(data);
         setMsg(data)
-        setEditTitle('');
-        setEditBody('');
         setTimeout(() => {
           setMsg('');
           navigate('/');
@@ -140,7 +131,12 @@ function App() {
         }, 2500)
       }
     }
-
+    const handleUpdate = () => {
+      const {id, title, body, checked} = editTodo;
+      handleEditTodo(id, title, body, checked);
+      setEditTodo({...editTodo, title: "", body: "", checked: false});
+  
+    }
     const handleSelect = (select) => {
       let result;
       if(select === 'all'){
@@ -156,15 +152,16 @@ function App() {
 
   return (
     <>
-    <TodoProvider value={{ getTodos, handleDelete, handleEditTodo, handleGetATodo, handleSubmit, title, setTitle, body, setBody, editBody, setEditBody, editTitle, setEditTitle, editChecked, setEditChecked, msg, errorMsg, getAllTodos, isLoading, getTodo, inputRef, handleSelect, filtered }} >
+    <TodoProvider value={{ getTodos, handleDelete, handleGetATodo, handleSubmit, msg, errorMsg, getAllTodos, isLoading, getTodo, inputRef, handleSelect, filtered, updateTodo, handleUpdate, editTodo, setEditTodo }} >
 
      <main className='app'>
         <Routes>
-          <Route index element={<Todo/>} />
+          <Route index element={<Todo/>} /> 
 
           <Route exact path={`/tododetails/:id`} element={<Details/>} />
 
           <Route exact path={`/editTodo/:id`} element={<EditTodo />} />
+          <Route exact path="*" element={<NotFound />} />
         </Routes>
      </main>  
 

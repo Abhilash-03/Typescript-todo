@@ -1,19 +1,28 @@
 import { useTodo } from "../context"
 import Input from "./Input"
+import { useState } from "react";
 
 const InputField = () => {
+  const {handleSubmit, msg, errorMsg, isLoading, inputRef} = useTodo();
 
-  const {title, setTitle, body, setBody, handleSubmit, msg, errorMsg, isLoading, inputRef} = useTodo();
+  const [todo, setTodo] = useState({title: "", body: "", checked: false});
+
+  const createTodo = (e) => {
+    e.preventDefault();
+    const {title, body, checked} = todo;
+    handleSubmit(title, body, checked);
+    setTodo({title: "", body: ""});
+  }
 
   return (
-    <form className="formBox" onSubmit={handleSubmit}>
+    <form className="formBox" onSubmit={createTodo}>
        <Input
        label="Title"
         type="text"
         className="input"
         placeholder="Enter Todo Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        value={todo.title}
+        onChange={(e) => setTodo({ ...todo, title: e.target.value })}
         ref={inputRef}
         required
        />
@@ -23,8 +32,8 @@ const InputField = () => {
         type="text"
         className="input"
         placeholder="Write Todo Body"
-        value={body}
-        onChange={(e) => setBody(e.target.value)}
+        value={todo.body}
+        onChange={(e) => setTodo({ ...todo, body: e.target.value })}
         required
        />
        {

@@ -337,3 +337,16 @@ input[type="checkbox"]:is(:hover, :focus){
   background-color: #008080;
   scale: 1.02;
 }
+
+.notfound{
+  flex: 1;
+  border-radius: 6px;
+  background: white;
+  padding: 1rem;
+  margin: 6rem auto;
+  background-color: #008080;
+  text-align: center;
+}
+.notfound h1{
+  font-size: 4rem;
+}

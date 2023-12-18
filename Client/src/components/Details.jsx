@@ -3,7 +3,7 @@ import { useTodo } from "../context"
 import { useEffect } from "react";
 
 const Details = () => {
-  const { getTodo, handleDelete, isLoading, msg, errorMsg, handleGetATodo }  = useTodo();
+  const { getTodo, handleDelete, isLoading, msg, errorMsg, handleGetATodo, updateTodo }  = useTodo();
   const{id} = useParams();
   useEffect(() => {
     handleGetATodo(id)
@@ -27,7 +27,7 @@ const Details = () => {
                 <p className="date info"><b>Created: </b> {(todo.createdAt).slice(0, 10)}</p>
                 <div className="btns">
                     <button className="btn deleteBtn" onClick={() => handleDelete(todo._id)}>🗑️</button>
-                  <Link to={`/editTodo/${todo._id}`}><button className="btn editBtn">📝</button> </Link>
+                  <Link to={`/editTodo/${todo._id}`} onClick={()=>updateTodo(todo)}><button className="btn editBtn">📝</button> </Link>
                 </div>
             </div>
         ))

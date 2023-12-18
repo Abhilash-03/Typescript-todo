@@ -3,6 +3,7 @@ import { useTodo } from '../context';
 
 const List = () => {
   const { handleGetATodo, filtered } = useTodo();
+
   return (
     <>
     { filtered.map((todo) => (

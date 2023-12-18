@@ -4,9 +4,7 @@ import TaskLists from "./TaskLists";
 
 
 const Todo = () => {
-  
   const {filtered, handleSelect} = useTodo()
-
 
   return (
     <>
@@ -19,7 +17,9 @@ const Todo = () => {
           <button className="tab" onClick={()=>handleSelect('pending')}>Pending</button>
           <button className="tab" onClick={()=>handleSelect('completed')}>Completed</button>
       </div>
+
       <TaskLists/>
+      
     </>
   );
 };
